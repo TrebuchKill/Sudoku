@@ -1,4 +1,4 @@
-package de.hubar.data
+package de.hubar.sudoku.data
 
 import java.beans.IndexedPropertyChangeEvent
 import java.beans.PropertyChangeListener

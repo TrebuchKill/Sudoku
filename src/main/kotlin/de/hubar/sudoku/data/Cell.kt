@@ -1,4 +1,4 @@
-package de.hubar.data
+package de.hubar.sudoku.data
 
 private fun requireValue(i: Int) = require(i in 1..9) {
 

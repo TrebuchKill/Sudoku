@@ -1,4 +1,4 @@
-package de.hubar.ui
+package de.hubar.sudoku.ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.hubar.data.Cell as CellData
-import de.hubar.data.Grid as GridData
+import de.hubar.sudoku.data.Cell as CellData
+import de.hubar.sudoku.data.Grid as GridData
 
 // TODO: How does the code react to different display scaling settings?
 

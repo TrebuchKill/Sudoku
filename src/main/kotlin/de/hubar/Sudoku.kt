@@ -11,10 +11,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
-import de.hubar.data.Grid as GridData
-import de.hubar.data.Cell as CellData
+import de.hubar.sudoku.data.Grid as GridData
+import de.hubar.sudoku.data.Cell as CellData
 
-import de.hubar.ui.Cell as CellUi
+import de.hubar.sudoku.ui.Cell as CellUi
 
 fun main() = application(exitProcessOnExit = true) {
 
