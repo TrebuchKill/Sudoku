@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import de.hubar.data.Grid
 
 fun main() = application(exitProcessOnExit = true) {
 
