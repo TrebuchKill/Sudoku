@@ -40,6 +40,75 @@ class Grid private constructor(private val grid: Array<Cell>)
         }
     }
 
+    class Box private constructor(private val offsetX: Int, private val offsetY: Int, private val grid: Grid, marker: Unit)
+    {
+        companion object
+        {
+            private val BOX_RANGE: IntRange = 0..<3
+        }
+
+        constructor(boxX: Int, boxY: Int, grid: Grid)
+            : this(boxX * 3,boxY * 3, grid, Unit)
+        {
+            require(boxX in BOX_RANGE)
+            require(boxY in BOX_RANGE)
+        }
+
+        operator fun get(x: Int, y: Int) : Cell
+        {
+            require(x in BOX_RANGE)
+            require(y in BOX_RANGE)
+            return grid[offsetX + x, offsetY + y]
+        }
+
+        operator fun set(x: Int, y: Int, value: Cell)
+        {
+            require(x in BOX_RANGE)
+            require(y in BOX_RANGE)
+            grid[offsetX + x, offsetY + y] = value
+        }
+    }
+
+    class Row(val y: Int, val grid: Grid)
+    {
+        init
+        {
+            require(y in HEIGHT_RANGE)
+        }
+
+        operator fun get(x: Int) : Cell
+        {
+            require(x in WIDTH_RANGE)
+            return grid[x, y]
+        }
+
+        operator fun set(x: Int, value: Cell)
+        {
+            require(x in WIDTH_RANGE)
+            grid[x, y] = value
+        }
+    }
+
+    class Column(val x: Int, val grid: Grid)
+    {
+        init
+        {
+            require(x in WIDTH_RANGE)
+        }
+
+        operator fun get(y: Int) : Cell
+        {
+            require(y in HEIGHT_RANGE)
+            return grid[x, y]
+        }
+
+        operator fun set(y: Int, value: Cell)
+        {
+            require(y in HEIGHT_RANGE)
+            grid[x, y] = value
+        }
+    }
+
     // private val grid = Array<Cell>(SIZE) { Cell.Empty }
     private val pcs = PropertyChangeSupport(this)
 
@@ -102,6 +171,15 @@ class Grid private constructor(private val grid: Array<Cell>)
         // grid[coordsToIndex(x, y)] = value
         this[coordsToIndex(x, y)] = value
     }
+
+    fun box(boxX: Int, boxY: Int) : Box =
+        Box(boxX, boxY, this)
+
+    fun row(y: Int) : Row =
+        Row(y, this)
+
+    fun column(x: Int) : Column =
+        Column(x, this)
 
     fun addPropertyChangeListener(listener: PropertyChangeListener) : Unit =
         pcs.addPropertyChangeListener(listener)

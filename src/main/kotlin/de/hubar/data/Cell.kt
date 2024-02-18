@@ -14,7 +14,7 @@ sealed interface Cell
         Empty
 
     fun value(value: Int): Cell =
-        Value(value)
+        Value.of(value)
 
     fun guess(value: Int): Cell =
         Guess(value)
@@ -33,6 +33,14 @@ sealed interface Cell
 
     data class Value(val value: Int) : Cell
     {
+        companion object
+        {
+            private val VALUES = Array(9) { i -> Value(i + 1) }
+
+            fun of(value: Int) : Value =
+                VALUES[value - 1] // value 1 is at offset 0, value 2 at offset 1, ...
+        }
+
         init
         {
             requireValue(value)
