@@ -25,24 +25,24 @@ private val guessSize = 12.sp
 private val boxSpacer = 2.dp
 
 @Composable
-fun Grid(grid: GridData) = MaterialTheme {
+fun Grid(grid: GridData, onUpdate: (Int, Int) -> Unit) = MaterialTheme {
 
     Column(Modifier.padding(4.dp).background(Color.Black)) {
 
-        repeat(3) { col ->
+        repeat(3) { row ->
 
             Row {
 
-                repeat(3) { row ->
+                repeat(3) { col ->
 
-                    Box(grid.box(col, row))
-                    if(row < 2)
+                    Box(grid.box(col, row)) { boxX, boxY -> onUpdate(col * 3 + boxX, row * 3 + boxY) }
+                    if(col < 2)
                     {
                         Spacer(Modifier.width(boxSpacer))
                     }
                 }
             }
-            if(col < 2)
+            if(row < 2)
             {
                 Spacer(Modifier.height(boxSpacer))
             }
@@ -51,7 +51,7 @@ fun Grid(grid: GridData) = MaterialTheme {
 }
 
 @Composable
-fun Box(box: GridData.Box) = MaterialTheme {
+fun Box(box: GridData.Box, onUpdate: (Int, Int) -> Unit) = MaterialTheme {
 
     Column {
 
@@ -61,7 +61,7 @@ fun Box(box: GridData.Box) = MaterialTheme {
 
                 repeat(3) { col ->
 
-                    Cell(box[col, row]) { println("Clicked on ($col, $row)") }
+                    Cell(box[col, row]) { onUpdate(col, row) }
                 }
             }
         }
@@ -134,6 +134,6 @@ fun CellPreview()
     }
     MaterialTheme {
 
-        Grid(grid)
+        Grid(grid) { _, _ -> }
     }
 }
