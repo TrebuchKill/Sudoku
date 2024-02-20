@@ -14,11 +14,12 @@ import androidx.compose.ui.window.application
 import de.hubar.sudoku.data.Grid as GridData
 import de.hubar.sudoku.data.Cell as CellData
 
-import de.hubar.sudoku.ui.Cell as CellUi
+import de.hubar.sudoku.ui.Grid as GridUi
 
 fun main() = application(exitProcessOnExit = true) {
 
     var running: Boolean by remember { mutableStateOf(true) }
+    var grid: GridData by remember { mutableStateOf(GridData()) }
     if(running)
     {
         Window(onCloseRequest =  { running = false }) {
@@ -27,12 +28,8 @@ fun main() = application(exitProcessOnExit = true) {
 
                 Column {
 
-                    Row {
-
-                        CellUi(CellData.Empty) { println("Clicked on empty") }
-                        CellUi(CellData.Value.of(5)) { println("Clicked on Value") }
-                        CellUi(CellData.Guess(9).guess(5).guess(1)) { println("Clicked on guess") }
-                    }
+                    Text("Hello World")
+                    GridUi(grid)
                 }
             }
         }

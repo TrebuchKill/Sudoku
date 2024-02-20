@@ -27,7 +27,7 @@ private val boxSpacer = 2.dp
 @Composable
 fun Grid(grid: GridData) = MaterialTheme {
 
-    Column(Modifier.background(Color.Black)) {
+    Column(Modifier.padding(4.dp).background(Color.Black)) {
 
         repeat(3) { col ->
 
