@@ -98,21 +98,21 @@ private fun CellGuess(modifier: Modifier, cell: CellData.Guess, onUpdate: () -> 
 
         Row(Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            Text(if(1 in cell.values) "1" else "", fontSize = guessSize)
-            Text(if(2 in cell.values) "2" else "", fontSize = guessSize)
-            Text(if(3 in cell.values) "3" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 1 }) "1" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 2 }) "2" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 3 }) "3" else "", fontSize = guessSize)
         }
         Row(Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            Text(if(4 in cell.values) "4" else "", fontSize = guessSize)
-            Text(if(5 in cell.values) "5" else "", fontSize = guessSize)
-            Text(if(6 in cell.values) "6" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 4 }) "4" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 5 }) "5" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 6 }) "6" else "", fontSize = guessSize)
         }
         Row(Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            Text(if(7 in cell.values) "7" else "", fontSize = guessSize)
-            Text(if(8 in cell.values) "8" else "", fontSize = guessSize)
-            Text(if(9 in cell.values) "9" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 7 }) "7" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 8 }) "8" else "", fontSize = guessSize)
+            Text(if(cell.values.any { it.value == 9 }) "9" else "", fontSize = guessSize)
         }
     }
 

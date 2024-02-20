@@ -1,10 +1,5 @@
 package de.hubar.sudoku.data
 
-private fun requireValue(i: Int) = require(i in 1..9) {
-
-    "A cell can only contain numbers between 1 and 9 (both inclusive), got: $i"
-}
-
 sealed interface Cell
 {
     val isBlank: Boolean
@@ -16,7 +11,13 @@ sealed interface Cell
     fun value(value: Int): Cell =
         Value.of(value)
 
+    fun value(value: Digit) : Cell =
+        Value.of(value)
+
     fun guess(value: Int): Cell =
+        guess(Digit(value))
+
+    fun guess(value: Digit) : Cell =
         Guess(value)
 
     data object Empty: Cell
@@ -31,19 +32,17 @@ sealed interface Cell
             "Empty"
     }
 
-    data class Value(val value: Int) : Cell
+    class Value private constructor(val value: Digit) : Cell
     {
         companion object
         {
-            private val VALUES = Array(9) { i -> Value(i + 1) }
+            private val VALUES = Array(9) { i -> Value(Digit(i + 1)) }
 
             fun of(value: Int) : Value =
                 VALUES[value - 1] // value 1 is at offset 0, value 2 at offset 1, ...
-        }
 
-        init
-        {
-            requireValue(value)
+            fun of(value: Digit) : Value =
+                VALUES[value.value - 1]
         }
 
         override val isBlank: Boolean
@@ -55,17 +54,11 @@ sealed interface Cell
             "Value($value)"
     }
 
-    data class Guess(val values: Set<Int>) : Cell
+    data class Guess(val values: Set<Digit>) : Cell
     {
-        init
-        {
-            requireValue(values.min())
-            requireValue(values.max())
-        }
+        constructor(value: Digit) : this(setOf(value))
 
-        constructor(value: Int) : this(setOf(value))
-
-        override fun guess(value: Int) : Cell =
+        override fun guess(value: Digit) : Cell =
             if(value in values)
             {
                 Guess(values - value)
