@@ -123,7 +123,7 @@ fun CellPreview()
     val grid = remember {
         val grid = GridData()
 
-        grid[2, 0] = grid[2, 0].guess(1).guess(3).guess(5).guess(7).guess(9)
+        grid[2, 0] = grid[2, 0].guess(1, 3, 5, 7, 9)
 
         repeat(9) {
 

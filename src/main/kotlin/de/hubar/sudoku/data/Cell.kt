@@ -17,6 +17,13 @@ sealed interface Cell
     fun guess(value: Int): Cell =
         guess(Digit(value))
 
+    // UB if a value is repeated... should probably be a KDoc
+    fun guess(vararg values: Int) : Cell
+    {
+        require(values.isNotEmpty()) { "A call to guess requires at least one value" }
+        return values.fold(this, Cell::guess)
+    }
+
     fun guess(value: Digit) : Cell =
         Guess(value)
 
