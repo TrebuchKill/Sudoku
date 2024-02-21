@@ -72,6 +72,7 @@ sealed interface Cell
             }
             else
             {
+                // TODO: Does it matter at all, if the resulting set is sorted?
                 Guess(values + value)
             }
 
