@@ -1,7 +1,5 @@
 package de.hubar.sudoku.data
 
-import java.beans.PropertyChangeListener
-import java.beans.PropertyChangeSupport
 import java.util.*
 import kotlin.Comparator
 
@@ -110,7 +108,7 @@ class Grid private constructor(private val grid: Array<Cell>)
     }
 
     // private val grid = Array<Cell>(SIZE) { Cell.Empty }
-    private val pcs = PropertyChangeSupport(this)
+    // private val pcs = PropertyChangeSupport(this)
 
     constructor() : this(Array(SIZE) { Cell.Empty })
 
@@ -161,9 +159,7 @@ class Grid private constructor(private val grid: Array<Cell>)
     operator fun set(i: Int, value: Cell)
     {
         require(i in grid.indices)
-        val old = grid[i]
         grid[i] = value
-        pcs.fireIndexedPropertyChange(null, i, old, value)
     }
 
     operator fun set(x: Int, y: Int, value: Cell)
@@ -180,22 +176,4 @@ class Grid private constructor(private val grid: Array<Cell>)
 
     fun column(x: Int) : Column =
         Column(x, this)
-
-    fun addPropertyChangeListener(listener: PropertyChangeListener) : Unit =
-        pcs.addPropertyChangeListener(listener)
-
-    fun addPropertyChangeListener(propertyName: String, listener: PropertyChangeListener) : Unit =
-        pcs.addPropertyChangeListener(propertyName, listener)
-
-    fun addIndexedPropertyChangeListener(listener: IndexedPropertyChangeListener) : PropertyChangeListener =
-        listener.wrap().also(this::addPropertyChangeListener)
-
-    fun addIndexedPropertyChangeListener(propertyName: String, listener: IndexedPropertyChangeListener) : PropertyChangeListener =
-        listener.wrap().also { addPropertyChangeListener(propertyName, it) }
-
-    fun removePropertyChangeListener(listener: PropertyChangeListener) : Unit =
-        pcs.removePropertyChangeListener(listener)
-
-    fun removePropertyChangeListener(propertyName: String, listener: PropertyChangeListener) : Unit =
-        pcs.removePropertyChangeListener(propertyName, listener)
 }
