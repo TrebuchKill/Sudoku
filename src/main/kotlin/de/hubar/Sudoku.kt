@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.awt.awtEventOrNull
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -19,7 +20,11 @@ fun main() = application(exitProcessOnExit = true) {
     val windowState = rememberWindowState(size = DpSize.Unspecified)
     if(running)
     {
-        Window(onCloseRequest =  { running = false }, state = windowState, title = "Sudoku") {
+        Window(
+            onCloseRequest =  { running = false },
+            state = windowState,
+            title = "Sudoku",
+            onKeyEvent = { evt -> evt.awtEventOrNull?.let { app.onKeyPress(it) }?.let { app = it; true } ?: false }) {
 
             MaterialTheme {
 
