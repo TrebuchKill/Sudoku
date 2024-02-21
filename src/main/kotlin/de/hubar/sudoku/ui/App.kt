@@ -3,13 +3,8 @@ package de.hubar.sudoku.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,12 +12,15 @@ import androidx.compose.ui.unit.sp
 import de.hubar.sudoku.data.Digit
 import de.hubar.sudoku.data.App as AppData
 
+// https://foso.github.io/Jetpack-Compose-Playground/desktop/overview/
+// Putting this helpful link in here for reference
+
 @Composable
-fun App(app: AppData, onUpdate: (AppData) -> Unit) = MaterialTheme {
+fun App(app: AppData, setApp: (AppData) -> Unit) = MaterialTheme {
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Grid(app.grid) { x, y -> onUpdate(app.onGridClick(x, y)) }
+        Grid(app.grid) { x, y -> setApp(app.onGridClick(x, y)) }
         Row {
 
             repeat(10) { i ->
@@ -41,7 +39,7 @@ fun App(app: AppData, onUpdate: (AppData) -> Unit) = MaterialTheme {
                 }
 
                 val ret = if (i == 0) null else Digit(i)
-                Button(modifier = Modifier.size(48.dp), colors = buttonColors, onClick = { onUpdate(app.onSelectionClick(ret)) }) {
+                Button(modifier = Modifier.size(48.dp), colors = buttonColors, onClick = { setApp(app.onSelectionClick(ret)) }) {
 
                     Text(when (i)
                     {
@@ -50,6 +48,11 @@ fun App(app: AppData, onUpdate: (AppData) -> Unit) = MaterialTheme {
                     }, fontSize = 24.sp)
                 }
             }
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+
+            Switch(app.guessing, { setApp(app.onToggleGuessing(it)) })
+            Text("Guessing")
         }
     }
 }

@@ -33,6 +33,9 @@ class App(
         return copy(grid = grid.copy(Triple(x, y, grid[x, y].func(selection))))
     }
 
+    fun onToggleGuessing(value: Boolean) : App =
+        copy(guessing = value)
+
     fun copy(grid: Grid = this.grid, selection: Digit? = this.selection, guessing: Boolean = this.guessing) : App =
         App(grid, selection, guessing)
 }
