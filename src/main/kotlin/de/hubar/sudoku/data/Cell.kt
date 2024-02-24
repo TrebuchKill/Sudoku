@@ -59,6 +59,16 @@ sealed interface Cell
 
         override fun toString(): String =
             "Value($value)"
+
+        // Can't replace a value by a guess
+        override fun guess(vararg values: Int): Cell =
+            this
+
+        override fun guess(value: Int): Cell =
+            this
+
+        override fun guess(value: Digit): Cell =
+            this
     }
 
     data class Guess(val values: Set<Digit>) : Cell
