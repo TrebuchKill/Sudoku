@@ -176,4 +176,24 @@ class Grid private constructor(private val grid: Array<Cell>)
 
     fun column(x: Int) : Column =
         Column(x, this)
+
+    fun isEmpty() : Boolean =
+        grid.all { it == Cell.Empty }
+
+    fun isNotEmpty() : Boolean =
+        grid.any { it != Cell.Empty }
+
+    override fun equals(other: Any?) : Boolean =
+        if(other is Grid)
+        {
+            grid.contentDeepEquals(other.grid)
+        }
+        else
+        {
+            false
+        }
+
+    // As recommended by IntelliJ
+    override fun hashCode(): Int =
+        grid.contentHashCode()
 }
