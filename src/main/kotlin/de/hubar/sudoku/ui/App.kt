@@ -20,6 +20,15 @@ fun App(app: AppData, setApp: (AppData) -> Unit) = MaterialTheme {
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
+        Text("Previous Grids: ${app.previousGrids.size}")
+        Button({ setApp(AppData()) }) {
+
+            Text("Reset")
+        }
+        Button({ setApp(app.onGoBack()) }, enabled = app.previousGrids.isNotEmpty()) {
+
+            Text("Back")
+        }
         Grid(app.grid) { x, y -> setApp(app.onGridClick(x, y)) }
         Row {
 

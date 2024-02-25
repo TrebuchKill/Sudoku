@@ -18,6 +18,8 @@ import de.hubar.sudoku.data.Digit
 import kotlin.random.Random
 import de.hubar.sudoku.data.Cell as CellData
 
+// TODO: CellGuess seems to be broken (not a grid)
+
 @Composable
 fun Cell(cell: CellData, onUpdate: () -> Unit) = MaterialTheme {
 

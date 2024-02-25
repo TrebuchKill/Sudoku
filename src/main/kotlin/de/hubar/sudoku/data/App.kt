@@ -1,38 +1,51 @@
 package de.hubar.sudoku.data
 
 import java.awt.event.KeyEvent
+import kotlin.math.max
 
 class App(
     val grid: Grid,
     val selection: Digit?,
-    val guessing: Boolean)
+    val guessing: Boolean,
+    val previousGrids: List<Grid>)
 {
-    constructor() : this(Grid(), null, false)
+    constructor() : this(Grid(), null, false, listOf())
 
     fun onSelectionClick(selection: Digit?) : App =
         copy(selection = selection)
 
     fun onGridClick(x: Int, y: Int) : App
     {
-        val func: Cell.(value: Digit?) -> Cell
-        if(guessing)
+        val func: Cell.(value: Digit?) -> Cell =
+            if(guessing)
+            {
+                { if(it != null) this.guess(it) else this }
+            }
+            else
+            {
+                {
+                    if(it != null)
+                    {
+                        this.value(it)
+                    }
+                    else
+                    {
+                        this.clear()
+                    }
+                }
+            }
+
+        val cur = grid[x, y]
+        val mutant = cur.func(selection)
+
+        return if(cur != mutant)
         {
-            func = { it -> if(it != null) this.guess(it) else this }
+            copy(grid = grid.copy(Triple(x, y, mutant)), previousGrids = previousGrids + grid)
         }
         else
         {
-            func = {
-                if(it != null)
-                {
-                    this.value(it)
-                }
-                else
-                {
-                    this.clear()
-                }
-            }
+            this
         }
-        return copy(grid = grid.copy(Triple(x, y, grid[x, y].func(selection))))
     }
 
     fun onToggleGuessing(value: Boolean) : App =
@@ -58,6 +71,25 @@ class App(
         else -> null
     }
 
-    fun copy(grid: Grid = this.grid, selection: Digit? = this.selection, guessing: Boolean = this.guessing) : App =
-        App(grid, selection, guessing)
+    fun onGoBack() : App
+    {
+        val grids = ArrayList<Grid>(max(previousGrids.size - 1, 1))
+        var lastGrid: Grid? = null
+        previousGrids.filterIndexedTo(grids) { i, it ->
+
+            when(i)
+            {
+                previousGrids.size - 1 -> { lastGrid = it; false }
+                else -> true
+            }
+        }
+        return copy(grid = checkNotNull(lastGrid) { "Called onGoBack while no previous entry exists" }, previousGrids = grids)
+    }
+
+    fun copy(
+        grid: Grid = this.grid,
+        selection: Digit? = this.selection,
+        guessing: Boolean = this.guessing,
+        previousGrids: List<Grid> = this.previousGrids) : App =
+        App(grid, selection, guessing, previousGrids)
 }
