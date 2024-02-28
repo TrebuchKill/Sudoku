@@ -1,12 +1,13 @@
 plugins {
 
     id("org.jetbrains.kotlin.jvm") version "1.9.22" // "2.0.0-Beta4"
-    id("org.jetbrains.compose") version "1.5.12"
+    id("org.jetbrains.compose") version "1.6.0"
 }
 
 repositories {
 
     mavenCentral()
+    google() // Since compose 1.6.0 a hard requirement :-(
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
@@ -24,5 +25,10 @@ dependencies {
         implementation("org.jetbrains:annotations:[23.0,)")
     }
 
+    // The kotlin-stdlib-jdk[78] for version 1.8.20 are being added from somewhere, without the following line; but it seems to be optional
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.22"))
+
+    // Use the (at the time) latest version of kotlinx-coroutines
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
     implementation(compose.desktop.currentOs)
 }
