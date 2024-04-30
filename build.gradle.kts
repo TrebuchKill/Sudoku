@@ -1,7 +1,8 @@
 plugins {
 
-    id("org.jetbrains.kotlin.jvm") version "1.9.22" // "2.0.0-Beta4"
-    id("org.jetbrains.compose") version "1.6.0"
+    id("org.jetbrains.kotlin.jvm") version "2.0.0-RC2" // "2.0.0-Beta4"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0-RC2"
+    id("org.jetbrains.compose") version "1.6.10-beta03"
 }
 
 repositories {
@@ -26,7 +27,7 @@ dependencies {
     }
 
     // The kotlin-stdlib-jdk[78] for version 1.8.20 are being added from somewhere, without the following line; but it seems to be optional
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.22"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.0-RC2"))
 
     // Use the (at the time) latest version of kotlinx-coroutines
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
