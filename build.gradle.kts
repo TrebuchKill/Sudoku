@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.compose") version "2.0.0-RC3"
 
     // Actual Compose Library Version
-    id("org.jetbrains.compose") version "1.6.10-rc01"
+    id("org.jetbrains.compose") version "1.6.10-rc03"
 }
 
 repositories {
