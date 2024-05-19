@@ -13,13 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import de.hubar.sudoku.data.Digit
 import kotlin.random.Random
 import de.hubar.sudoku.data.Cell as CellData
-
-// TODO: CellGuess seems to be broken (not a grid)
-// TODO: CellGuess is even more broken with Compose 1.6.0
 
 @Composable
 fun Cell(cell: CellData, onUpdate: () -> Unit) = MaterialTheme {
@@ -47,29 +46,38 @@ private fun CellValue(modifier: Modifier, cell: CellData.Value, onUpdate: () -> 
 
 @Composable
 private fun CellGuess(modifier: Modifier, cell: CellData.Guess, onUpdate: () -> Unit) =
-    Column(modifier.fillMaxHeight(1f).padding(8.dp, 4.dp).clickable(onClick = onUpdate), verticalArrangement = Arrangement.SpaceBetween) {
+    Column(modifier.clickable(onClick = onUpdate).padding(4.dp).fillMaxWidth(1f),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally) {
 
         Row(Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            Text(if(cell.values.any { it.value == 1 }) "1" else "", fontSize = guessSize)
-            Text(if(cell.values.any { it.value == 2 }) "2" else "", fontSize = guessSize)
-            Text(if(cell.values.any { it.value == 3 }) "3" else "", fontSize = guessSize)
+            CellGuessText(if(cell.values.any { it.value == 1 }) "1" else "")
+            CellGuessText(if(cell.values.any { it.value == 2 }) "2" else "")
+            CellGuessText(if(cell.values.any { it.value == 3 }) "3" else "")
         }
         Row(Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            Text(if(cell.values.any { it.value == 4 }) "4" else "", fontSize = guessSize)
-            Text(if(cell.values.any { it.value == 5 }) "5" else "", fontSize = guessSize)
-            Text(if(cell.values.any { it.value == 6 }) "6" else "", fontSize = guessSize)
+            CellGuessText(if(cell.values.any { it.value == 4 }) "4" else "")
+            CellGuessText(if(cell.values.any { it.value == 5 }) "5" else "")
+            CellGuessText(if(cell.values.any { it.value == 6 }) "6" else "")
         }
         Row(Modifier.fillMaxWidth(1f), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            Text(if(cell.values.any { it.value == 7 }) "7" else "", fontSize = guessSize)
-            Text(if(cell.values.any { it.value == 8 }) "8" else "", fontSize = guessSize)
-            Text(if(cell.values.any { it.value == 9 }) "9" else "", fontSize = guessSize)
+            CellGuessText(if(cell.values.any { it.value == 7 }) "7" else "")
+            CellGuessText(if(cell.values.any { it.value == 8 }) "8" else "")
+            CellGuessText(if(cell.values.any { it.value == 9 }) "9" else "")
         }
     }
 
-
+@Composable
+private fun RowScope.CellGuessText(text: String) =
+    Text(
+        text,
+        Modifier.weight(1f),
+        lineHeight = TextUnit(16f, TextUnitType.Sp),
+        fontSize = guessSize,
+        textAlign = TextAlign.Center)
 
 @Composable
 @Preview
@@ -78,6 +86,7 @@ fun CellPreview()
     val empty = remember { CellData.Empty }
     val value = remember { CellData.Value.of(Random.nextInt(0, 9) + 1) }
     val staticGuess = remember { CellData.Guess(setOf(Digit(1), Digit(3), Digit(5), Digit(7), Digit(9))) }
+    val fullGuess = remember { CellData.Guess((1..9).map { Digit(it) }.toSet()) }
     val dynamicGuess = remember {
 
         val number = Random.nextInt(1, 512) // Get a random number from 1 (inclusive) until 512 (exclusive), for at least 1 bit and up to all lowest 9 bits set
@@ -101,6 +110,7 @@ fun CellPreview()
                 "Empty Cell" to empty,
                 "Value" to value,
                 "Guess (Cross)" to staticGuess,
+                "Guess (Full)" to fullGuess,
                 "Guess (Random)" to dynamicGuess).forEach { (label, cell) ->
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
