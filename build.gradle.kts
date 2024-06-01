@@ -35,6 +35,6 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.0"))
 
     // Use the (at the time) latest version of kotlinx-coroutines
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.1"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.9.0-RC"))
     implementation(compose.desktop.currentOs)
 }
