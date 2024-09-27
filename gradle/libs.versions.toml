@@ -1,0 +1,8 @@
+[versions]
+kotlin = "2.0.20"
+compose = "1.6.11"
+coroutines = "1.9.0"
+
+[libraries]
+kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-bom", version.ref = "coroutines" } # May just skip the ".ref" and the coroutines definition as I don't refer to the version anywhere else

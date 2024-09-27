@@ -1,13 +1,13 @@
 plugins {
 
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version libs.versions.kotlin
 
     // Plugin to interact with the compose compiler, which is built-in into Kotlin since Kotlin Version 2.0.0-RC2
     // same version as Kotlin version
-    kotlin("plugin.compose") version "2.0.0"
+    kotlin("plugin.compose") version libs.versions.kotlin
 
     // Actual Compose Library Version
-    id("org.jetbrains.compose") version "1.6.11"
+    id("org.jetbrains.compose") version libs.versions.compose
 }
 
 repositories {
@@ -32,9 +32,9 @@ dependencies {
     }
 
     // The kotlin-stdlib-jdk[78] for version 1.8.20 (the version may be inaccurate in the future) are being added from somewhere, without the following line; but this line seems to be optional (no harm done when missing)
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.0"))
+    implementation(platform(libs.kotlin.bom))
 
     // Use the (at the time) latest version of kotlinx-coroutines
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.9.0-RC"))
+    implementation(platform(libs.kotlinx.coroutines))
     implementation(compose.desktop.currentOs)
 }
